@@ -13,9 +13,6 @@ import {
   FiSettings, FiLogOut, FiArchive, FiDollarSign, FiActivity
 } from 'react-icons/fi';
 
-// ===================================================================
-// PHẦN 2: ĐỊNH NGHĨA DỮ LIỆU (CẤP CAO NHẤT)
-// ===================================================================
 const menuItems = [
   {
     section: 'Tổng quan',
@@ -42,8 +39,8 @@ const menuItems = [
   {
     section: 'Quản lý chung',
     items: [
-      { name: 'Dự án', icon: <FiBriefcase />, path: '/management/projects', requiredAction: 'View', requiredEntity: 'project' },
-      { name: 'Phòng ban', icon: <FiUsers />, path: '/management/departments', requiredAction: 'View', requiredEntity: 'department' },
+      { name: 'Dự án', icon: <FiBriefcase />, path: '/management/projects', requiredAction: '', requiredEntity: 'project' },
+      { name: 'Phòng ban', icon: <FiUsers />, path: '/management/departments', requiredAction: '', requiredEntity: 'department' },
       { name: 'Danh mục chi phí', icon: <FiArchive />, path: '/management/categories', requiredAction: 'View', requiredEntity: 'category' },
     ],
   },
@@ -57,9 +54,7 @@ const menuItems = [
   },
 ];
 
-// ===================================================================
-// PHẦN 3: ĐỊNH NGHĨA COMPONENT (CẤP CAO NHẤT)
-// ===================================================================
+
 const SidebarContent = () => {
   const { hasPermission } = useAuth();
 
@@ -113,9 +108,6 @@ const SidebarContent = () => {
   );
 };
 
-// ===================================================================
-// PHẦN 4: EXPORT COMPONENT (CẤP CAO NHẤT)
-// ===================================================================
 export const Sidebar = () => {
   const { isSidebarOpen, closeSidebar } = useLayout();
 
@@ -153,7 +145,4 @@ export const Sidebar = () => {
   );
 };
 
-// ===================================================================
-// PHẦN 5: EXPORT DEFAULT (CẤP CAO NHẤT)
-// ===================================================================
 export default Sidebar;
