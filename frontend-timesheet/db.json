@@ -1,0 +1,95 @@
+{
+  "timesheets": [
+    {
+      "id": "T000001",
+      "timesheetId": "T000001",
+      "userId": "U00001",
+      "userName": "Phan Trong Hieu",
+      "startDate": "2025-02-14",
+      "endDate": "2025-02-20",
+      "totalHours": 40,
+      "status": "Approved",
+      "submittedBy": "Hieu Phan on 2025-02-21"
+    },
+    {
+    "id": "T000002",
+    "timesheetId": "T000002",
+    "userId": "U00001",
+    "userName": "Phan Trong Hieu",
+    "startDate": "2025-02-28",
+    "endDate": "2025-03-06",
+    "totalHours": 16,
+    "status": "Submited",
+    "submittedBy": null,
+    "entries": [
+        { "date": "2025-02-28", "project": "Project Phoenix", "task": "Initial setup", "hours": 8 },
+        { "date": "2025-03-01", "project": "Project Phoenix", "task": "Component design", "hours": 8 }
+    ]
+    },
+    {
+    "id": "T000003",
+    "timesheetId": "T000003",
+    "userId": "U00001",
+    "userName": "Phan Trong Hieu",
+    "startDate": "2025-02-28",
+    "endDate": "2025-03-06",
+    "totalHours": 16,
+    "status": "Draft",
+    "submittedBy": null,
+    "entries": [
+        { "date": "2025-02-28", "project": "Project Phoenix", "task": "Initial setup", "hours": 8 },
+        { "date": "2025-03-01", "project": "Project Phoenix", "task": "Component design", "hours": 8 }
+    ]
+    },
+    {
+      "id": "T000004",
+      "timesheetId": "T000004",
+      "userId": "U00001",
+      "userName": "Phan Trong Hieu",
+      "startDate": "2025-01-31",
+      "endDate": "2025-02-06",
+      "totalHours": 40,
+      "status": "Rejected",
+      "submittedBy": "Hieu Phan on 2025-02-07"
+    }
+  ],
+  "expense_reports": [
+    {
+      "id": "E00001",
+      "reportId": "E00001",
+      "userId": "U00001",
+      "description": "Business Trip to Da Nang (Client Meetup)",
+      "submissionDate": "2025-06-20",
+      "totalAmount": 7550000,
+      "status": "Approved"
+    },
+    {
+      "id": "E00002",
+      "reportId": "E00002",
+      "userId": "U00001",
+      "description": "Team Dinner & Celebration Q2",
+      "submissionDate": "2025-07-01",
+      "totalAmount": 4200000,
+      "status": "Submitted"
+    },
+    {
+      "id": "E00003",
+      "reportId": "E00003",
+      "userId": "U00001",
+      "description": "Office Supplies & Equipment",
+      "submissionDate": null,
+      "totalAmount": 1850000,
+      "status": "Draft"
+    },
+    {
+      "id": "E00004",
+      "reportId": "E00004",
+      "userId": "U00002",
+      "description": "Software Subscriptions (July)",
+      "submissionDate": "2025-06-15",
+      "totalAmount": 950000,
+      "status": "Rejected"
+    }
+  ]
+}
+

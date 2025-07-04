@@ -1,47 +1,64 @@
 // src/pages/TimesheetEditPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
-// We need the mock data here to find the timesheet to edit
-import { mockTimesheets } from './TimesheetPage'; // Assuming mock data is exported from TimesheetPage
+import { getTimesheetById, updateTimesheet } from '../../api/timesheetService';
 import TimesheetForm from '../../components/features/timesheets/TimesheetForm';
 
 const TimesheetEditPage = () => {
   const { timesheetId } = useParams();
   const navigate = useNavigate();
-  const [timesheetData, setTimesheetData] = useState(null);
+  const [initialData, setInitialData] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // useEffect để fetch dữ liệu từ API khi component được mount
   useEffect(() => {
-    // In a real app, fetch data from API: api.timesheets.getById(timesheetId)
-    const dataToEdit = mockTimesheets.find(ts => ts.timesheetId === timesheetId);
-    // Let's add some mock entries for the form
-    if (dataToEdit) {
-        dataToEdit.entries = [
-            { date: '2025-02-28', project: 'Project Phoenix', task: 'Initial setup', hours: 8 },
-            { date: '2025-03-01', project: 'Project Phoenix', task: 'Component design', hours: 8 },
-        ];
-    }
-    setTimesheetData(dataToEdit);
+    const fetchTimesheet = async () => {
+        console.log('Fetching data for ID:', timesheetId); 
+      setIsLoading(true);
+      const data = await getTimesheetById(timesheetId);
+      setInitialData(data);
+      setIsLoading(false);
+    };
+
+    fetchTimesheet();
   }, [timesheetId]);
 
-  const handleUpdateTimesheet = (formData) => {
-    console.log(`Updating timesheet ${timesheetId}:`, formData);
-    // API call: api.timesheets.update(timesheetId, formData)
-    alert(`Timesheet ${timesheetId} updated with status: ${formData.status}`);
-    navigate('/timesheets');
+  // Hàm xử lý khi form được submit
+  const handleUpdateTimesheet = async (formData) => {
+    setIsSaving(true);
+    const updatedData = await updateTimesheet(timesheetId, formData);
+    setIsSaving(false);
+
+    if (updatedData) {
+      alert(`Timesheet ${timesheetId} updated with status: ${updatedData.status}`);
+      navigate('/timesheets');
+    } else {
+      alert(`Failed to update timesheet ${timesheetId}.`);
+    }
   };
   
-  if (!timesheetData) {
-    return <div>Loading...</div>; // Or a Spinner component
+  // Hiển thị trạng thái loading trong khi chờ API
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-10">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+      </div>
+    );
+  }
+
+  // Xử lý trường hợp không tìm thấy timesheet
+  if (!initialData) {
+    return <div className="text-center py-10">Timesheet not found.</div>
   }
 
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Edit Timesheet ({timesheetId})</h1>
       <TimesheetForm 
-        initialData={timesheetData}
+        initialData={initialData}
         onSubmit={handleUpdateTimesheet} 
-        isSaving={false} 
+        isSaving={isSaving} 
       />
     </div>
   );

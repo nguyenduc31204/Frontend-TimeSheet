@@ -2,51 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPlus, FiEdit, FiEye, FiTrash2, FiSend } from 'react-icons/fi';
+import { getTimesheets } from '../../api/timesheetService';
 
 // --- MOCK DATA (Simulating data from your database) ---
 // In a real application, this would come from an API call.
-export const mockTimesheets = [
-  {
-    timesheetId: 'T000001',
-    userId: 'U00001',
-    userName: 'Phan Trong Hieu',
-    startDate: '2025-02-14',
-    endDate: '2025-02-20',
-    totalHours: 40,
-    status: 'Approved',
-    submittedBy: 'Hieu Phan on 2025-02-21',
-  },
-  {
-    timesheetId: 'T000002',
-    userId: 'U00001',
-    userName: 'Phan Trong Hieu',
-    startDate: '2025-02-21',
-    endDate: '2025-02-27',
-    totalHours: 38.5,
-    status: 'Submitted',
-    submittedBy: 'Hieu Phan on 2025-02-28',
-  },
-  {
-    timesheetId: 'T000003',
-    userId: 'U00001',
-    userName: 'Phan Trong Hieu',
-    startDate: '2025-02-28',
-    endDate: '2025-03-06',
-    totalHours: 16,
-    status: 'Draft',
-    submittedBy: null,
-  },
-  {
-    timesheetId: 'T000004',
-    userId: 'U00001',
-    userName: 'Phan Trong Hieu',
-    startDate: '2025-01-31',
-    endDate: '2025-02-06',
-    totalHours: 40,
-    status: 'Rejected',
-    submittedBy: 'Hieu Phan on 2025-02-07',
-  },
-];
+
 
 // --- Sub-components for better organization ---
 
@@ -105,11 +65,15 @@ const TimesheetPage = () => {
 
   // Simulate fetching data on component mount
   useEffect(() => {
-    setTimeout(() => {
-      setAllTimesheets(mockTimesheets);
-      setFilteredTimesheets(mockTimesheets);
+    const fetchTimesheets = async () => {
+      setIsLoading(true);
+      const data = await getTimesheets();
+      setAllTimesheets(data);
+      setFilteredTimesheets(data); 
       setIsLoading(false);
-    }, 1000); // 1-second delay
+    };
+
+    fetchTimesheets();
   }, []);
 
   // Handle filtering when a tab is clicked

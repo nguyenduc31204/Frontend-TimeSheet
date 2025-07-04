@@ -1,9 +1,12 @@
 // src/pages/TimesheetViewPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { mockTimesheets } from './TimesheetPage'; // Assuming mock data is exported
+import { exportToExcel } from '../../utils/exportUtils';
+import { FiDownload, FiArrowLeft } from 'react-icons/fi';
+import { getTimesheetById } from '../../api/timesheetService';
 
-const StatusBadge = ({ status }) => { // Re-using the badge component
+// StatusBadge component remains the same
+const StatusBadge = ({ status }) => {
   const styles = {
     Draft: 'bg-gray-200 text-gray-800',
     Submitted: 'bg-yellow-100 text-yellow-800',
@@ -17,30 +20,79 @@ const StatusBadge = ({ status }) => { // Re-using the badge component
   );
 };
 
+const Spinner = () => (
+    <div className="flex justify-center items-center py-10">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+    </div>
+);
+
+// --- Main Page Component ---
 
 const TimesheetViewPage = () => {
     const { timesheetId } = useParams();
+    // FIX: Simplified state, only need 'timesheet' and 'isLoading'
     const [timesheet, setTimesheet] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
+    // useEffect to fetch data from API
     useEffect(() => {
-        // Fetch data
-        const dataToView = mockTimesheets.find(ts => ts.timesheetId === timesheetId);
-         if (dataToView) {
-            dataToView.entries = [
-                { date: '2025-02-21', project: 'Internal CRM', task: 'API Integration', hours: 8 },
-                { date: '2025-02-22', project: 'Mobile App', task: 'UI Mockups', hours: 6.5 },
-                { date: '2025-02-23', project: 'Internal CRM', task: 'Testing & QA', hours: 8 },
-                { date: '2025-02-24', project: 'Mobile App', task: 'State management setup', hours: 8 },
-                { date: '2025-02-25', project: 'Internal CRM', task: 'Deployment', hours: 8 },
-            ];
-        }
-        setTimesheet(dataToView);
+        const fetchTimesheet = async () => {
+            setIsLoading(true);
+            const data = await getTimesheetById(timesheetId);
+            console.log('data', data)
+            setTimesheet(data); 
+
+            setIsLoading(false);
+        };
+    
+        fetchTimesheet();
     }, [timesheetId]);
 
-    if (!timesheet) return <div>Loading...</div>;
-    
-    const formatDate = (dateString) => new Date(dateString).toLocaleDateString('en-CA'); // YYYY-MM-DD
+    console.log('timesheet', timesheet)
 
+    // Handle the export action
+    const handleExport = () => {
+        // This check now works correctly because the 'timesheet' state is being updated
+        if (!timesheet || !timesheet.entries) {
+            alert('No data available to export.');
+            return;
+        }
+
+        const dataForExport = timesheet.entries.map(entry => ({
+            "Timesheet ID": timesheet.timesheetId,
+            "Employee Name": timesheet.userName,
+            "Period": `${formatDate(timesheet.startDate)} - ${formatDate(timesheet.endDate)}`,
+            "Entry Date": formatDate(entry.date),
+            "Project": entry.project,
+            "Task": entry.task,
+            "Hours": entry.hours,
+        }));
+        
+        dataForExport.push({});
+        dataForExport.push({
+            "Task": "TOTAL",
+            "Hours": timesheet.totalHours
+        });
+
+        const fileName = `Timesheet_${timesheet.timesheetId}_${timesheet.userName.replace(' ', '_')}`;
+        exportToExcel(dataForExport, fileName);
+    };
+    
+    // Moved helper function to the top
+    const formatDate = (dateString) => dateString ? new Date(dateString).toLocaleDateString('en-CA') : 'N/A';
+
+    // FIX: Correct rendering logic
+    // 1. Check for loading state first
+    if (isLoading) {
+        return <Spinner />;
+    }
+
+    // 2. After loading, check if data exists
+    if (!timesheet) {
+        return <div className="text-center py-10 font-semibold">Could not find timesheet with ID: {timesheetId}</div>;
+    }
+
+    // 3. If everything is fine, render the page
     return (
         <div className="space-y-6 bg-white p-6 sm:p-8 rounded-lg shadow-md">
             <div className="flex flex-col sm:flex-row justify-between sm:items-start gap-4 pb-6 border-b">
@@ -72,23 +124,34 @@ const TimesheetViewPage = () => {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{formatDate(entry.date)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{entry.project}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{entry.task}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-semibold text-right">{entry.hours.toFixed(1)}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-semibold text-right">{entry.hours?.toFixed(1) || '0.0'}</td>
                             </tr>
                         ))}
                     </tbody>
                     <tfoot className="bg-gray-50">
                         <tr>
                             <td colSpan="3" className="px-6 py-3 text-right text-sm font-bold text-gray-900">Total Hours</td>
-                            <td className="px-6 py-3 text-right text-sm font-bold text-gray-900">{timesheet.totalHours.toFixed(1)}</td>
+                            <td className="px-6 py-3 text-right text-sm font-bold text-gray-900">{timesheet.totalHours?.toFixed(1) || '0.0'}</td>
                         </tr>
                     </tfoot>
                  </table>
             </div>
 
-            <div className="pt-6 border-t mt-6 text-right">
-                <Link to="/timesheets" className="px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300">
+            <div className="pt-6 border-t mt-6 flex justify-end items-center gap-3">
+                <Link to="/timesheets" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg hover:bg-gray-300">
+                    <FiArrowLeft />
                     Back to List
                 </Link>
+
+                {timesheet.status === 'Approved' && (
+                    <button
+                        onClick={handleExport}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition-colors"
+                    >
+                        <FiDownload />
+                        Export to Excel
+                    </button>
+                )}
             </div>
         </div>
     );
