@@ -60,3 +60,56 @@ export const getExpenseReports = async () => {
     }
   };
 // Bạn có thể thêm các hàm khác ở đây: getTimesheetById, createTimesheet, ...
+
+
+export const getExpenseReportById = async (id) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/expense_reports/${id}`);
+    if (!response.ok) throw new Error('Network response was not ok');
+    return await response.json();
+  } catch (error) {
+    console.error(`Failed to fetch expense report with id ${id}:`, error);
+    return null;
+  }
+};
+
+export const createExpenseReport = async (reportData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/expense_reports`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reportData),
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      return await response.json();
+    } catch (error) {
+      console.error('Failed to create expense report:', error);
+      return null;
+    }
+};
+
+export const updateExpenseReport = async (id, reportData) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/expense_reports/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reportData),
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      return await response.json();
+    } catch (error) {
+      console.error(`Failed to update expense report with id ${id}:`, error);
+      return null;
+    }
+};
+
+export const getCategories = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/categories`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      return await response.json();
+    } catch (error) {
+      console.error("Failed to fetch categories:", error);
+      return [];
+    }
+};

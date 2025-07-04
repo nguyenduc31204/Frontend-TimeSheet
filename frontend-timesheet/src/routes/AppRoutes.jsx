@@ -12,6 +12,10 @@ import TimesheetPage from '../pages/TimeSheet/TimesheetPage';
 import TimesheetAddPage from '../pages/TimeSheet/TimesheetAddPage';
 import TimesheetEditPage from '../pages/TimeSheet/TimesheetEditPage';
 import TimesheetViewPage from '../pages/TimeSheet/TimesheetViewPage';
+import ExpenseReportListPage from '../pages/Expense/ExpenseReportListPage';
+import ExpenseReportAddPage from '../pages/Expense/ExpenseReportAddPage';
+import ExpenseReportEditPage from '../pages/Expense/ExpenseReportEditPage';
+import ExpenseReportViewPage from '../pages/Expense/ExpenseReportViewPage';
 
 
 const AppRoutes = () => {
@@ -24,6 +28,11 @@ const AppRoutes = () => {
         <Route path="/timesheets/new" element={<TimesheetAddPage />} />         {/* <-- ADD */}
           <Route path="/timesheets/edit/:timesheetId" element={<TimesheetEditPage />} /> {/* <-- ADD */}
           <Route path="/timesheets/view/:timesheetId" element={<TimesheetViewPage />} /> {/* <-- ADD */}
+
+          <Route path="/expenses" element={<ExpenseReportListPage />} />
+        <Route path="/expenses/new" element={<ExpenseReportAddPage />} />
+        <Route path="/expenses/edit/:reportId" element={<ExpenseReportEditPage />} />
+        <Route path="/expenses/view/:reportId" element={<ExpenseReportViewPage />} />
         {/* <Route path="/manager/approvals" element={<ApprovalPage />} /> */}
         <Route element={<ProtectedRoute requiredAction="View" requiredEntity="user" />}>
             <Route path="/admin/users" element={<DashboardPage />} />

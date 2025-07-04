@@ -12,34 +12,54 @@
       "submittedBy": "Hieu Phan on 2025-02-21"
     },
     {
-    "id": "T000002",
-    "timesheetId": "T000002",
-    "userId": "U00001",
-    "userName": "Phan Trong Hieu",
-    "startDate": "2025-02-28",
-    "endDate": "2025-03-06",
-    "totalHours": 16,
-    "status": "Submited",
-    "submittedBy": null,
-    "entries": [
-        { "date": "2025-02-28", "project": "Project Phoenix", "task": "Initial setup", "hours": 8 },
-        { "date": "2025-03-01", "project": "Project Phoenix", "task": "Component design", "hours": 8 }
-    ]
+      "id": "T000002",
+      "timesheetId": "T000002",
+      "userId": "U00001",
+      "userName": "Phan Trong Hieu",
+      "startDate": "2025-02-28",
+      "endDate": "2025-03-06",
+      "totalHours": 16,
+      "status": "Submited",
+      "submittedBy": null,
+      "entries": [
+        {
+          "date": "2025-02-28",
+          "project": "Project Phoenix",
+          "task": "Initial setup",
+          "hours": 8
+        },
+        {
+          "date": "2025-03-01",
+          "project": "Project Phoenix",
+          "task": "Component design",
+          "hours": 8
+        }
+      ]
     },
     {
-    "id": "T000003",
-    "timesheetId": "T000003",
-    "userId": "U00001",
-    "userName": "Phan Trong Hieu",
-    "startDate": "2025-02-28",
-    "endDate": "2025-03-06",
-    "totalHours": 16,
-    "status": "Draft",
-    "submittedBy": null,
-    "entries": [
-        { "date": "2025-02-28", "project": "Project Phoenix", "task": "Initial setup", "hours": 8 },
-        { "date": "2025-03-01", "project": "Project Phoenix", "task": "Component design", "hours": 8 }
-    ]
+      "id": "T000003",
+      "timesheetId": "T000003",
+      "userId": "U00001",
+      "userName": "Phan Trong Hieu",
+      "startDate": "2025-02-28",
+      "endDate": "2025-03-06",
+      "totalHours": 16,
+      "status": "Draft",
+      "submittedBy": null,
+      "entries": [
+        {
+          "date": "2025-02-28",
+          "project": "Project Phoenix",
+          "task": "Initial setup",
+          "hours": 8
+        },
+        {
+          "date": "2025-03-01",
+          "project": "Project Phoenix",
+          "task": "Component design",
+          "hours": 8
+        }
+      ]
     },
     {
       "id": "T000004",
@@ -61,7 +81,27 @@
       "description": "Business Trip to Da Nang (Client Meetup)",
       "submissionDate": "2025-06-20",
       "totalAmount": 7550000,
-      "status": "Approved"
+      "status": "Approved",
+      "items": [
+        {
+          "date": "2025-06-18",
+          "categoryId": "C01",
+          "description": "Flight ticket",
+          "amount": 4500000
+        },
+        {
+          "date": "2025-06-19",
+          "categoryId": "C02",
+          "description": "Client Dinner",
+          "amount": 1800000
+        },
+        {
+          "date": "2025-06-19",
+          "categoryId": "C01",
+          "description": "Taxi to airport",
+          "amount": 1250000
+        }
+      ]
     },
     {
       "id": "E00002",
@@ -70,7 +110,8 @@
       "description": "Team Dinner & Celebration Q2",
       "submissionDate": "2025-07-01",
       "totalAmount": 4200000,
-      "status": "Submitted"
+      "status": "Submitted",
+      "items": []
     },
     {
       "id": "E00003",
@@ -79,17 +120,43 @@
       "description": "Office Supplies & Equipment",
       "submissionDate": null,
       "totalAmount": 1850000,
-      "status": "Draft"
+      "status": "Draft",
+      "items": [
+        {
+          "date": "2025-07-02",
+          "categoryId": "C03",
+          "description": "New Keyboard",
+          "amount": 1200000
+        },
+        {
+          "date": "2025-07-02",
+          "categoryId": "C03",
+          "description": "Stationery",
+          "amount": 650000
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "C01",
+      "name": "Travel"
     },
     {
-      "id": "E00004",
-      "reportId": "E00004",
-      "userId": "U00002",
-      "description": "Software Subscriptions (July)",
-      "submissionDate": "2025-06-15",
-      "totalAmount": 950000,
-      "status": "Rejected"
+      "id": "C02",
+      "name": "Meals & Entertainment"
+    },
+    {
+      "id": "C03",
+      "name": "Office Supplies"
+    },
+    {
+      "id": "C04",
+      "name": "Software & Subscriptions"
+    },
+    {
+      "id": "C05",
+      "name": "Other"
     }
   ]
 }
-
