@@ -16,6 +16,14 @@ import ExpenseReportListPage from '../pages/Expense/ExpenseReportListPage';
 import ExpenseReportAddPage from '../pages/Expense/ExpenseReportAddPage';
 import ExpenseReportEditPage from '../pages/Expense/ExpenseReportEditPage';
 import ExpenseReportViewPage from '../pages/Expense/ExpenseReportViewPage';
+//------------categories---------------
+import CategoryList from "../pages/Categories/CategoryList";
+import DepartmentList from '../pages/Departments/DepartmentList';
+
+import Projects from '../pages/Projects/Projects';
+import AddProject from '../pages/Projects/AddProject';
+import EditProject from '../pages/Projects/EditProject';
+
 
 
 const AppRoutes = () => {
@@ -37,6 +45,17 @@ const AppRoutes = () => {
         <Route element={<ProtectedRoute requiredAction="View" requiredEntity="user" />}>
             <Route path="/admin/users" element={<DashboardPage />} />
         </Route>
+
+        <Route path="/categories" element={<CategoryList />} />
+        {/* <Route path="/categories/add" element={<CategoryAdd />} />
+        <Route path="/categories/edit/:id" element={<CategoryEdit />} />
+        <Route path="/categories/:id" element={<CategoryDetail />} /> */}
+        <Route path="/departments" element={<DepartmentList />} />
+
+        <Route path="/Projects" element={<Projects />} />
+        <Route path="/Projects/AddProject" element={<AddProject />} />
+        <Route path="/Projects/EditProject/:id" element={<EditProject />} />
+
       </Route>
 
       {/* === Các Route sử dụng AuthLayout (KHÔNG có Sidebar/Navbar) === */}

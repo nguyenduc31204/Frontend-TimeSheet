@@ -140,23 +140,70 @@
   "categories": [
     {
       "id": "C01",
-      "name": "Travel"
+      "category_name": "Travel",
+      "category_description": "ok1"
     },
     {
       "id": "C02",
-      "name": "Meals & Entertainment"
+      "category_name": "Meals & Entertainment",
+      "category_description": "ok2"
     },
     {
       "id": "C03",
-      "name": "Office Supplies"
+      "category_name": "Office Supplies",
+      "category_description": "ok4newww"
     },
     {
       "id": "C04",
-      "name": "Software & Subscriptions"
+      "category_name": "Software & Subscriptions",
+      "category_description": "ok4"
     },
     {
-      "id": "C05",
-      "name": "Other"
+      "id": "56c4",
+      "category_name": "ok",
+      "category_description": "Một buổi sáng mùa thu se lạnh, ánh nắng nhẹ nhàng xuyên qua kẽ lá, chiếu rọi khắp con đường nhỏ rợp bóng cây. Tiếng chim hót líu lo vang vọng, hòa quyện cùng làn gió nhẹ nhàng lướt qua, mang theo hương thơm dìu dịu của hoa cỏ. Mọi thứ trở nên yên bình và dễ chịu, như thể thời gian chậm lại để con người có thể cảm nhận sâu sắc vẻ đẹp giản dị của thiên nhiên và cuộc sống."
+    }
+  ],
+  "department": [
+    {
+      "id": "2",
+      "department_name": "Sale",
+      "department_description": "ok2"
+    },
+    {
+      "id": "336f",
+      "department_name": "IT",
+      "department_description": "Một buổi sáng mùa thu se lạnh, ánh nắng nhẹ nhàng xuyên qua kẽ lá, chiếu rọi khắp con đường nhỏ rợp bóng cây. Tiếng chim hót líu lo vang vọng, hòa quyện cùng làn gió nhẹ nhàng lướt qua, mang theo hương thơm dìu dịu của hoa cỏ. Mọi thứ trở nên yên bình và dễ chịu, như thể thời gian chậm lại để con người có thể cảm nhận sâu sắc vẻ đẹp giản dị của thiên nhiên và cuộc sống."
+    }
+  ],
+  "project": [
+    {
+      "project_name": "c",
+      "project_description": "c",
+      "department_id": "2",
+      "status": 1,
+      "id": "7e0a"
+    },
+    {
+      "id": "86b2",
+      "project_name": "b",
+      "project_description": "b",
+      "department_id": "2",
+      "status": 0
+    },
+    {
+      "project_name": "k",
+      "project_description": "k",
+      "department_id": "336f",
+      "status": 0,
+      "id": "57b3"
+    },
+    {
+      "project_name": "x",
+      "project_description": "ok",
+      "department_id": "336f",
+      "status": 0,
+      "id": "4f41"
     }
   ]
 }

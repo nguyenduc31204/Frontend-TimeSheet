@@ -39,9 +39,11 @@ const menuItems = [
   {
     section: 'Quản lý chung',
     items: [
-      { name: 'Dự án', icon: <FiBriefcase />, path: '/management/projects', requiredAction: '', requiredEntity: 'project' },
-      { name: 'Phòng ban', icon: <FiUsers />, path: '/management/departments', requiredAction: '', requiredEntity: 'department' },
-      { name: 'Danh mục chi phí', icon: <FiArchive />, path: '/management/categories', requiredAction: 'View', requiredEntity: 'category' },
+      { name: 'Dự án', icon: <FiBriefcase />, path: '/projects', requiredAction: '', requiredEntity: 'project' },
+      { name: 'Phòng ban', icon: <FiUsers />, path: '/departments', requiredAction: '', requiredEntity: 'department' },
+      { name: 'Danh mục chi phí', icon: <FiArchive />, path: '/categories', requiredAction: '', requiredEntity: 'category' },
+  
+      
     ],
   },
   {
@@ -50,6 +52,8 @@ const menuItems = [
       { name: 'Người dùng', icon: <FiUsers />, path: '/admin/users', requiredAction: 'View', requiredEntity: 'user' },
       { name: 'Vai trò & Quyền hạn', icon: <FiShield />, path: '/admin/roles', requiredAction: 'View', requiredEntity: 'role' },
       { name: 'Lịch sử hoạt động', icon: <FiActivity />, path: '/admin/logs', requiredAction: 'View', requiredEntity: 'log' },
+      
+
     ],
   },
 ];
