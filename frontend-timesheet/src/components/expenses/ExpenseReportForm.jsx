@@ -1,4 +1,3 @@
-// src/components/features/expenses/ExpenseReportForm.jsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiPlus, FiTrash2, FiSave } from 'react-icons/fi';
@@ -10,7 +9,6 @@ const ExpenseReportForm = ({ initialData, onSubmit, isSaving }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch categories for the dropdown
     const fetchCategories = async () => {
       const cats = await getCategories();
       setCategories(cats);

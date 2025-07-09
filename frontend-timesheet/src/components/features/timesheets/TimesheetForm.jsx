@@ -1,4 +1,3 @@
-// src/components/features/timesheets/TimesheetForm.jsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { FiPlus, FiTrash2, FiSave } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +18,9 @@ const TimesheetForm = ({ initialData, onSubmit, isSaving }) => {
         startDate: initialData.startDate || '',
         endDate: initialData.endDate || '',
         status: initialData.status || 'Draft',
-        // In a real app, you would fetch entries for the timesheet
         entries: initialData.entries || [{ date: '', project: '', task: '', hours: 0 }],
       });
     } else {
-        // Default values for a new timesheet
         setFormData({
             startDate: '',
             endDate: '',

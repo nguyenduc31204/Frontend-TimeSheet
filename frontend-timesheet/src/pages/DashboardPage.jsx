@@ -1,25 +1,15 @@
 // src/pages/DashboardPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiClock, FiFileText, FiAlertTriangle, FiPlusSquare, FiEye, FiBarChart2, FiArrowRight } from 'react-icons/fi';
+import { FiClock, FiFileText, FiCheckSquare, FiPlusSquare, FiEye, FiBarChart2, FiArrowRight } from 'react-icons/fi';
+import { useAuth } from '../contexts/AuthContext';
+import { getMyTimesheets, getPendingApprovals } from '../api/timesheetService';
 
-// --- Giả lập Custom Hook ---
-// Trong dự án thật, hook này sẽ lấy dữ liệu từ Context API
-const useAuth = () => {
-  const user = {
-    name: 'Nguyễn Văn An',
-  };
-  return { user };
-};
-// ----------------------------
-
-// === CÁC COMPONENT CON CHUYÊN BIỆT CHO DASHBOARD ===
-// Trong dự án lớn, bạn có thể tách các component này ra file riêng trong `src/components/features/dashboard/`
-
+// --- Sub-components (no changes needed) ---
 const DashboardHeader = ({ user }) => (
   <div className="mb-8">
-    <h1 className="text-3xl font-bold text-gray-900">Welcome back, {user?.name}!</h1>
-    <p className="mt-2 text-lg text-gray-600">Here's a quick overview of your work today..</p>
+    <h1 className="text-3xl font-bold text-gray-900">Welcome back, {user?.user_name}!</h1>
+    <p className="mt-2 text-lg text-gray-600">Here's a quick overview of your workspace.</p>
   </div>
 );
 
@@ -55,31 +45,64 @@ const Spinner = () => (
 );
 
 
-// === COMPONENT TRANG DASHBOARD CHÍNH ===
+// --- Main Dashboard Page Component (Rewritten) ---
 const DashboardPage = () => {
-  const { user } = useAuth();
+  const { user, hasPermission, permissions } = useAuth();
   const [stats, setStats] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Giả lập việc fetch dữ liệu từ API
   useEffect(() => {
-    const fetchDashboardData = () => {
-      // Dữ liệu giả lập
-      const mockStats = [
-        { value: '32/40', label: 'Hours recorded this week', icon: <FiClock className="text-blue-500"/>, color: 'border-blue-500' },
-        { value: '1', label: 'Yêu cầu chờ duyệt', icon: <FiFileText className="text-yellow-500"/>, color: 'border-yellow-500' },
-        { value: 'Hôm nay', label: 'Hạn nộp tiếp theo', icon: <FiAlertTriangle className="text-red-500"/>, color: 'border-red-500' },
-      ];
+    const fetchDashboardData = async () => {
+      if (!user) return;
       
-      // Giả lập độ trễ mạng
-      setTimeout(() => {
-        setStats(mockStats);
-        setIsLoading(false);
-      }, 1000); // 1 giây
+      setIsLoading(true);
+      console.log("Permissions của người dùng hiện tại:", permissions);
+      // Fetch data concurrently for efficiency
+      const [myTimesheets, pendingApprovals] = await Promise.all([
+          getMyTimesheets(user.id),
+          hasPermission('Review', 'timesheet') ? getPendingApprovals() : Promise.resolve([])
+      ]);
+
+      // --- Calculate Statistics ---
+      const totalHoursThisWeek = myTimesheets
+          // You can add date-fns library for more robust date checking
+          // For now, a simple calculation
+          .reduce((acc, ts) => acc + ts.totalHours, 0);
+
+      const myPendingSubmissions = myTimesheets.filter(ts => ts.status === 'Submitted').length;
+      
+      const dashboardStats = [];
+
+      dashboardStats.push({ 
+          value: totalHoursThisWeek.toFixed(1), 
+          label: 'Total Hours Logged', 
+          icon: <FiClock className="text-blue-500"/>, 
+          color: 'border-blue-500' 
+      });
+
+      // Show different stats based on user role/permission
+      if (hasPermission('Review', 'timesheet')) {
+          dashboardStats.push({ 
+              value: pendingApprovals.length, 
+              label: 'Approvals Needed', 
+              icon: <FiCheckSquare className="text-green-500"/>, 
+              color: 'border-green-500' 
+          });
+      } else {
+          dashboardStats.push({ 
+              value: myPendingSubmissions, 
+              label: 'My Pending Submissions', 
+              icon: <FiFileText className="text-yellow-500"/>, 
+              color: 'border-yellow-500' 
+          });
+      }
+
+      setStats(dashboardStats);
+      setIsLoading(false);
     };
 
     fetchDashboardData();
-  }, []); // Mảng rỗng đảm bảo useEffect chỉ chạy 1 lần
+  }, [user, hasPermission]); // Rerun when user context is available
 
   if (isLoading) {
     return <Spinner />;
@@ -89,41 +112,41 @@ const DashboardPage = () => {
     <div className="space-y-12">
       <DashboardHeader user={user} />
       
-      {/* Lưới Thống kê */}
+      {/* Statistics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {stats.map((stat) => (
           <StatCard key={stat.label} {...stat} />
         ))}
       </div>
       
-      {/* Lưới Truy cập nhanh */}
+      {/* Quick Access Grid */}
       <div>
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Truy cập nhanh</h2>
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">Quick Access</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ActionCard 
             icon={<FiPlusSquare />}
-            title="Nộp Timesheet mới"
-            description="Ghi lại giờ làm của bạn cho tuần này."
-            to="/submit" // Thay đổi route nếu cần
+            title="Submit Timesheet"
+            description="Log your hours for the week."
+            to="/timesheets/new"
           />
           <ActionCard 
             icon={<FiEye />}
-            title="Xem các Timesheet đã nộp"
-            description="Kiểm tra lại lịch sử chấm công của bạn."
-            to="/history" // Thay đổi route nếu cần
+            title="View My Timesheets"
+            description="Review your submission history."
+            to="/timesheets"
           />
            <ActionCard 
-            icon={<FiBarChart2 />}
-            title="Xem báo cáo"
-            description="Phân tích và xem tổng quan giờ làm."
-            to="/reports" // Thay đổi route nếu cần
+            icon={<FiPlusSquare />}
+            title="Submit Expense Report"
+            description="File a new report for your expenses."
+            to="/expenses/new"
           />
-           {/* <ActionCard 
-            icon={<FiClipboard />}
-            title="Đi đến trang Phê duyệt"
-            description="Dành cho Manager: xem xét các yêu cầu."
-            to="/manager/approvals"
-          /> */}
+           <ActionCard 
+            icon={<FiEye />}
+            title="View My Expense Reports"
+            description="Check the status of your reports."
+            to="/expenses"
+          />
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
     {
       "id": "T000001",
       "timesheetId": "T000001",
-      "userId": "U00001",
+      "userId": "U00002",
       "userName": "Phan Trong Hieu",
       "startDate": "2025-02-14",
       "endDate": "2025-02-20",
@@ -14,12 +14,12 @@
     {
       "id": "T000002",
       "timesheetId": "T000002",
-      "userId": "U00001",
+      "userId": "U00002",
       "userName": "Phan Trong Hieu",
       "startDate": "2025-02-28",
       "endDate": "2025-03-06",
       "totalHours": 16,
-      "status": "Submited",
+      "status": "Approved",
       "submittedBy": null,
       "entries": [
         {
@@ -37,29 +37,19 @@
       ]
     },
     {
-      "id": "T000003",
-      "timesheetId": "T000003",
-      "userId": "U00001",
-      "userName": "Phan Trong Hieu",
-      "startDate": "2025-02-28",
-      "endDate": "2025-03-06",
-      "totalHours": 16,
+      "startDate": "2025-07-07",
+      "endDate": "2025-07-11",
       "status": "Draft",
-      "submittedBy": null,
       "entries": [
         {
-          "date": "2025-02-28",
-          "project": "Project Phoenix",
-          "task": "Initial setup",
-          "hours": 8
-        },
-        {
-          "date": "2025-03-01",
-          "project": "Project Phoenix",
-          "task": "Component design",
+          "date": "2025-07-08",
+          "project": "Project timesheet and pricebook",
+          "task": "Hoàn thiện thiết kế giao diện timesheet, chỉnh sửa lỗi pricebook, ",
           "hours": 8
         }
-      ]
+      ],
+      "totalHours": 8,
+      "id": "T000003"
     },
     {
       "id": "T000004",
@@ -69,7 +59,7 @@
       "startDate": "2025-01-31",
       "endDate": "2025-02-06",
       "totalHours": 40,
-      "status": "Rejected",
+      "status": "Approved",
       "submittedBy": "Hieu Phan on 2025-02-07"
     }
   ],
@@ -174,6 +164,24 @@
       "id": "336f",
       "department_name": "IT",
       "department_description": "Một buổi sáng mùa thu se lạnh, ánh nắng nhẹ nhàng xuyên qua kẽ lá, chiếu rọi khắp con đường nhỏ rợp bóng cây. Tiếng chim hót líu lo vang vọng, hòa quyện cùng làn gió nhẹ nhàng lướt qua, mang theo hương thơm dìu dịu của hoa cỏ. Mọi thứ trở nên yên bình và dễ chịu, như thể thời gian chậm lại để con người có thể cảm nhận sâu sắc vẻ đẹp giản dị của thiên nhiên và cuộc sống."
+    },
+    {
+      "id": "D01",
+      "department_name": "IT",
+      "department_description": "sdfgsdf"
+    },
+    {
+      "id": "D02",
+      "department_name": "Sales",
+      "department_description": "sdfsdfsdfsd"
+    },
+    {
+      "id": "D03",
+      "department_name": "Human Resources"
+    },
+    {
+      "id": "D04",
+      "department_name": "Marketing"
     }
   ],
   "project": [
@@ -204,6 +212,236 @@
       "department_id": "336f",
       "status": 0,
       "id": "4f41"
+    }
+  ],
+  "roles": [
+    {
+      "id": "R00001",
+      "roleId": "R00001",
+      "roleName": "Admin",
+      "roleDescription": "Has full access to all system features.",
+      "permissionIds": [
+        "P00001",
+        "P00003",
+        "P00004",
+        "P00005",
+        "P00006",
+        "P00007",
+        "P00008",
+        "P00002"
+      ]
+    },
+    {
+      "id": "R00002",
+      "roleId": "R00002",
+      "roleName": "Manager",
+      "roleDescription": "Can manage team members, projects, and approve requests.",
+      "permissionIds": [
+        "P00002",
+        "P00003",
+        "P00006"
+      ]
+    },
+    {
+      "id": "R00003",
+      "roleId": "R00003",
+      "roleName": "Employee",
+      "roleDescription": "Can submit timesheets and expense reports.",
+      "permissionIds": [
+        "P00002"
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "id": "P00001",
+      "permissionName": "Full control",
+      "permissionType": "user"
+    },
+    {
+      "id": "P00002",
+      "permissionName": "View",
+      "permissionType": "user"
+    },
+    {
+      "id": "P00003",
+      "permissionName": "Manage",
+      "permissionType": "user"
+    },
+    {
+      "id": "P00004",
+      "permissionName": "Full control",
+      "permissionType": "project"
+    },
+    {
+      "id": "P00005",
+      "permissionName": "View",
+      "permissionType": "project"
+    },
+    {
+      "id": "P00006",
+      "permissionName": "Manage",
+      "permissionType": "project"
+    },
+    {
+      "id": "P00007",
+      "permissionName": "Review",
+      "permissionType": "timesheet"
+    },
+    {
+      "id": "P00008",
+      "permissionName": "Submit",
+      "permissionType": "timesheet"
+    }
+  ],
+  "users": [
+    {
+      "id": "U00001",
+      "userId": "U00001",
+      "userName": "Hieu Phan",
+      "userEmail": "hieu.phan@example.com",
+      "phone": "0912345678",
+      "departmentId": "D01",
+      "departmentName": "IT",
+      "roleId": "R00001",
+      "roleName": "System Admin",
+      "status": "Active",
+      "role": "ADMIN"
+    },
+    {
+      "id": "U00002",
+      "userId": "U00002",
+      "userName": "Jane Doe",
+      "userEmail": "jane.doe@example.com",
+      "phone": "0987654321",
+      "departmentId": "D02",
+      "departmentName": "Sales",
+      "roleId": "R00002",
+      "roleName": "Manager",
+      "status": "Active",
+      "role": "MANAGER"
+    },
+    {
+      "id": "U00003",
+      "userId": "U00003",
+      "userName": "John Smith",
+      "userEmail": "1@1.1",
+      "phone": "0905551234",
+      "departmentId": "D03",
+      "roleId": "R00003",
+      "roleName": "Employee",
+      "status": "Active",
+      "role": "EMPLOYEE"
+    }
+  ],
+  "activity_logs": [
+    {
+      "id": "AL00001",
+      "userId": "U00001",
+      "userName": "Hieu Phan",
+      "action": "Updated",
+      "targetType": "Role",
+      "targetId": "R00002",
+      "targetName": "Manager",
+      "timestamp": "2025-07-08T10:30:00Z"
+    },
+    {
+      "id": "AL00002",
+      "userId": "U00002",
+      "userName": "Jane Doe",
+      "action": "Submitted",
+      "targetType": "Timesheet",
+      "targetId": "T000002",
+      "targetName": "Timesheet Jul 14 - Jul 20",
+      "timestamp": "2025-07-08T09:15:00Z"
+    },
+    {
+      "id": "AL00003",
+      "userId": "U00001",
+      "userName": "Hieu Phan",
+      "action": "Created",
+      "targetType": "User",
+      "targetId": "U00003",
+      "targetName": "John Smith",
+      "timestamp": "2025-07-07T17:05:00Z"
+    },
+    {
+      "id": "AL00004",
+      "userId": "U00001",
+      "userName": "Hieu Phan",
+      "action": "Approved",
+      "targetType": "Expense Report",
+      "targetId": "E00001",
+      "targetName": "Business Trip to Da Nang",
+      "timestamp": "2025-07-07T14:20:00Z"
+    },
+    {
+      "id": "AL00005",
+      "userId": "U00003",
+      "userName": "John Smith",
+      "action": "Logged In",
+      "targetType": "System",
+      "targetId": null,
+      "targetName": null,
+      "timestamp": "2025-07-06T08:00:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "N00001",
+      "userId": "U00001",
+      "message": "Your timesheet T000001 has been approved.",
+      "link": "/timesheets/view/T000001",
+      "isRead": true,
+      "timestamp": "2025-07-09T10:00:00Z"
+    },
+    {
+      "id": "N62792",
+      "userId": "U00001",
+      "message": "Your timesheet (T000004) has been approved.",
+      "link": "/timesheets/view/T000004",
+      "isRead": true,
+      "timestamp": "2025-07-09T03:59:22.792Z"
+    },
+    {
+      "id": "N03636",
+      "userId": "U00002",
+      "message": "Your timesheet (T000001) has been approved.",
+      "link": "/timesheets/view/T000001",
+      "isRead": true,
+      "timestamp": "2025-07-09T04:01:43.636Z"
+    },
+    {
+      "id": "N08085",
+      "userId": "U00002",
+      "message": "Your timesheet (T000002) has been approved.",
+      "link": "/timesheets/view/T000002",
+      "isRead": true,
+      "timestamp": "2025-07-09T04:01:48.085Z"
+    },
+    {
+      "id": "N11156",
+      "userId": "U00001",
+      "message": "Your timesheet (T000004) has been approved.",
+      "link": "/timesheets/view/T000004",
+      "isRead": true,
+      "timestamp": "2025-07-09T04:01:51.156Z"
+    },
+    {
+      "id": "N77348",
+      "userId": "U00002",
+      "message": "Your timesheet (T000001) has been approved.",
+      "link": "/timesheets/view/T000001",
+      "isRead": true,
+      "timestamp": "2025-07-09T04:19:37.348Z"
+    },
+    {
+      "id": "N84614",
+      "userId": "U00002",
+      "message": "Your timesheet (T000002) has been approved.",
+      "link": "/timesheets/view/T000002",
+      "isRead": true,
+      "timestamp": "2025-07-09T04:19:44.614Z"
     }
   ]
 }

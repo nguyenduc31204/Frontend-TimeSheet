@@ -23,6 +23,15 @@ import DepartmentList from '../pages/Departments/DepartmentList';
 import Projects from '../pages/Projects/Projects';
 import AddProject from '../pages/Projects/AddProject';
 import EditProject from '../pages/Projects/EditProject';
+import RoleEditPage from '../pages/Role/RoleEditPage';
+import RoleListPage from '../pages/Role/RoleListPage';
+import RoleAddPage from '../pages/Role/RoleAddPage';
+import UserEditPage from '../pages/User/UserEditPage';
+import UserAddPage from '../pages/User/UserAddPage';
+import UserListPage from '../pages/User/UserListPage';
+import ActivityLogPage from '../pages/ActivityLogPage';
+import SettingsPage from '../pages/account/SettingsPage';
+import ApprovalPage from '../pages/manager/ApprovalPage';
 
 
 
@@ -42,8 +51,32 @@ const AppRoutes = () => {
         <Route path="/expenses/edit/:reportId" element={<ExpenseReportEditPage />} />
         <Route path="/expenses/view/:reportId" element={<ExpenseReportViewPage />} />
         {/* <Route path="/manager/approvals" element={<ApprovalPage />} /> */}
-        <Route element={<ProtectedRoute requiredAction="View" requiredEntity="user" />}>
+        {/* <Route element={<ProtectedRoute requiredAction="View" requiredEntity="user" />}>
             <Route path="/admin/users" element={<DashboardPage />} />
+        </Route> */}
+        <Route element={<ProtectedRoute requiredAction="" requiredEntity="" />}>
+        <Route path="/admin/roles" element={<RoleListPage />} />
+        </Route>
+        <Route element={<ProtectedRoute requiredAction="" requiredEntity="" />}>
+            <Route path="/admin/roles/new" element={<RoleAddPage />} />
+            <Route path="/admin/roles/edit/:roleId" element={<RoleEditPage />} />
+        </Route>
+        
+
+        
+
+
+        <Route element={<ProtectedRoute requiredAction="View" requiredEntity="user" />}>
+            <Route path="/admin/users" element={<UserListPage />} />
+        </Route>
+        <Route element={<ProtectedRoute requiredAction="Manage" requiredEntity="user" />}>
+            <Route path="/admin/users/new" element={<UserAddPage />} />
+            <Route path="/admin/users/edit/:userId" element={<UserEditPage />} />
+        </Route>
+        <Route path="/account/settings" element={<SettingsPage />} />
+
+        <Route element={<ProtectedRoute requiredAction="Review" requiredEntity="timesheet" />}>
+            <Route path="/manager/approvals" element={<ApprovalPage />} />
         </Route>
 
         <Route path="/categories" element={<CategoryList />} />
@@ -51,10 +84,15 @@ const AppRoutes = () => {
         <Route path="/categories/edit/:id" element={<CategoryEdit />} />
         <Route path="/categories/:id" element={<CategoryDetail />} /> */}
         <Route path="/departments" element={<DepartmentList />} />
-
+        <Route element={<ProtectedRoute requiredAction="View" requiredEntity="log" />}>
+            <Route path="/admin/logs" element={<ActivityLogPage />} />
+        </Route>
+          
         <Route path="/Projects" element={<Projects />} />
         <Route path="/Projects/AddProject" element={<AddProject />} />
         <Route path="/Projects/EditProject/:id" element={<EditProject />} />
+
+        
 
       </Route>
 

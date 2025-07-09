@@ -2,15 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPlus, FiEdit, FiEye, FiTrash2, FiSend } from 'react-icons/fi';
-import { getExpenseReports } from '../../api/timesheetService';
+import { getExpenseReportByUser, getExpenseReports } from '../../api/timesheetService';
+import { useAuth } from '../../contexts/AuthContext';
+
 
 
 const StatusBadge = ({ status }) => {
   const styles = {
-    Draft: 'bg-gray-200 text-gray-800',
-    Submitted: 'bg-yellow-100 text-yellow-800',
-    Approved: 'bg-green-100 text-green-800',
-    Rejected: 'bg-red-100 text-red-800',
+    draft: 'bg-gray-200 text-gray-800',
+    submitted: 'bg-yellow-100 text-yellow-800',
+    approved: 'bg-green-100 text-green-800',
+    rejected: 'bg-red-100 text-red-800',
   };
   return (
     <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${styles[status] || 'bg-gray-100'}`}>
@@ -20,7 +22,7 @@ const StatusBadge = ({ status }) => {
 };
 
 const ActionButtons = ({ status, reportId }) => {
-  if (status === 'Draft') {
+  if (status === 'draft') {
     return (
       <div className="flex items-center space-x-2">
         <Link to={`/expenses/edit/${reportId}`} className="text-indigo-600 hover:text-indigo-900" title="Edit">
@@ -61,12 +63,16 @@ const ExpenseReportListPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const TABS = ['All', 'Draft', 'Submitted', 'Approved', 'Rejected'];
   const [activeTab, setActiveTab] = useState('All');
+  const { user, hasPermission, permissions } = useAuth();
+  const [token, setToken] = useState(sessionStorage.getItem('Token'));
+  
+  
 
   // FIX: Updated useEffect to fetch data from the API
   useEffect(() => {
     const fetchReports = async () => {
         setIsLoading(true);
-        const data = await getExpenseReports();
+        const data = await getExpenseReportByUser(token, user.user_id);
         setAllReports(data);
         setFilteredReports(data);
         setIsLoading(false);
@@ -135,12 +141,12 @@ const ExpenseReportListPage = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredReports.map((report) => (
                     <tr key={report.id}> {/* FIX: Use report.id for the key */}
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{report.description}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(report.submissionDate)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-semibold">{formatCurrency(report.totalAmount)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{report.expense_report_description}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(report.created_at)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-semibold">{formatCurrency(report.total_amount)}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm"><StatusBadge status={report.status} /></td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <ActionButtons status={report.status} reportId={report.id} /> {/* FIX: Use report.id */}
+                        <ActionButtons status={report.status} reportId={report.expense_report_id} /> 
                       </td>
                     </tr>
                   ))}
