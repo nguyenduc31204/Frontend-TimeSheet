@@ -1,8 +1,4 @@
-// src/components/layout/Sidebar.jsx
 
-// ===================================================================
-// PHẦN 1: CÁC CÂU LỆNH IMPORT (LUÔN Ở TRÊN CÙNG)
-// ===================================================================
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useLayout } from '../../contexts/LayoutContext';
@@ -15,45 +11,43 @@ import {
 
 const menuItems = [
   {
-    section: 'Tổng quan',
+    section: 'Overview',
     items: [
       // Dashboard không yêu cầu quyền cụ thể, ai cũng thấy
       { name: 'Dashboard', icon: <FiHome />, path: '/' }, 
     ],
   },
   {
-    section: 'Nghiệp vụ',
+    section: 'Business',
     items: [
       // Giả sử tên permission_type_name trong DB là 'timesheet' và 'expense_report'
-      { name: 'Bảng chấm công', icon: <FiClipboard />, path: '/timesheets', requiredAction: '', requiredEntity: 'timesheet' },
-      { name: 'Báo cáo chi phí', icon: <FiDollarSign />, path: '/expenses', requiredAction: '', requiredEntity: 'expense_report' },
+      { name: 'Timesheet', icon: <FiClipboard />, path: '/timesheets', requiredAction: '', requiredEntity: 'timesheet' },
+      { name: 'Expense report', icon: <FiDollarSign />, path: '/expenses', requiredAction: '', requiredEntity: 'expense_report' },
     ],
   },
   {
-    section: 'Phê duyệt',
+    section: 'Approve',
     items: [
        // Giả sử có quyền Review trên 'timesheet' để vào trang này
-      { name: 'Yêu cầu chờ', icon: <FiCheckSquare />, path: '/manager/approvals', requiredAction: 'Review', requiredEntity: 'timesheet' },
+      { name: 'Request pending', icon: <FiCheckSquare />, path: '/manager/approvals', requiredAction: 'Review', requiredEntity: 'timesheet' },
     ],
   },
   {
-    section: 'Quản lý chung',
+    section: 'General Management',
     items: [
-      { name: 'Dự án', icon: <FiBriefcase />, path: '/projects', requiredAction: '', requiredEntity: 'project' },
-      { name: 'Phòng ban', icon: <FiUsers />, path: '/departments', requiredAction: '', requiredEntity: 'department' },
-      { name: 'Danh mục chi phí', icon: <FiArchive />, path: '/categories', requiredAction: '', requiredEntity: 'category' },
+      { name: 'Project', icon: <FiBriefcase />, path: '/projects', requiredAction: '', requiredEntity: 'project' },
+      { name: 'Department', icon: <FiUsers />, path: '/departments', requiredAction: '', requiredEntity: 'department' },
+      { name: 'Cost category', icon: <FiArchive />, path: '/categories', requiredAction: '', requiredEntity: 'category' },
   
       
     ],
   },
   {
-    section: 'Quản trị hệ thống',
+    section: 'System Administration',
     items: [
-      { name: 'Người dùng', icon: <FiUsers />, path: '/admin/users', requiredAction: 'View', requiredEntity: 'user' },
-      { name: 'Vai trò & Quyền hạn', icon: <FiShield />, path: '/admin/roles', requiredAction: 'View', requiredEntity: 'role' },
-      { name: 'Lịch sử hoạt động', icon: <FiActivity />, path: '/admin/logs', requiredAction: 'View', requiredEntity: 'log' },
-      
-
+      { name: 'Users', icon: <FiUsers />, path: '/admin/users', requiredAction: 'manage', requiredEntity: 'user' },
+      { name: 'Roles and Permissions', icon: <FiShield />, path: '/admin/roles', requiredAction: 'manage', requiredEntity: 'role' },
+      { name: 'Activity history', icon: <FiActivity />, path: '/admin/logs', requiredAction: 'View', requiredEntity: 'log' },
     ],
   },
 ];
@@ -101,11 +95,11 @@ const SidebarContent = () => {
         <div className="px-4 py-3 mt-auto border-t border-indigo-500/30 flex-shrink-0">
              <NavLink to="/account/settings" className={({ isActive }) => `flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors w-full mb-1 ${isActive ? 'bg-indigo-700 text-white' : 'text-indigo-100 hover:bg-indigo-500 hover:text-white'}`}>
                 <FiSettings className="mr-3 text-lg" />
-                Cài đặt
+                Settings
             </NavLink>
              <a href="#" className="flex items-center px-3 py-2 rounded-md text-sm font-medium text-indigo-100 hover:bg-indigo-500 hover:text-white w-full">
                 <FiLogOut className="mr-3 text-lg" />
-                Đăng xuất
+                Logout
             </a>
         </div>
     </div>
